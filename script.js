@@ -4,6 +4,51 @@ menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.
 nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.textContent='☰'}));
 document.getElementById('year').textContent=new Date().getFullYear();
 
+/* Copy cleanup: keep each section focused on a different benefit */
+const serviceCards=document.querySelectorAll('#services article');
+if(serviceCards[0]) serviceCards[0].querySelector('p').textContent='Comfortable home-based boarding tailored to your pet’s usual routine.';
+if(serviceCards[1]) serviceCards[1].querySelector('p').textContent='Walks, play, meals and rest are planned around the schedule your dog already knows.';
+
+const homeLife=document.querySelector('.home-life-section');
+if(homeLife){
+  const heading=homeLife.querySelector('h2');if(heading) heading.textContent='Comfort, company and a familiar routine';
+  const lead=homeLife.querySelector('.lead-copy');if(lead) lead.textContent='Pets stay with us in our air-conditioned home and are treated as part of the household. Because we are home most of the time, they have company throughout the day and plenty of time to settle in at their own pace.';
+  const chips=homeLife.querySelectorAll('.feature-chips span');if(chips[3]) chips[3].textContent='💙 Plenty of company';
+  const note=homeLife.querySelector('.home-note p');if(note) note.textContent='Feeding, rest, play and walks are kept as close as possible to what your pet already knows.';
+}
+
+const careSection=document.querySelector('#care');
+if(careSection){
+  const intro=careSection.querySelector('div > p:not(.eyebrow)');if(intro) intro.textContent='Every animal has a different personality. Some want to play, some need quiet space, and some simply prefer to stay close to a person. We give each guest the pace and space that suits them.';
+  const items=careSection.querySelectorAll('.checks li');
+  const careCopy=['Feeding and rest schedules kept familiar','Quiet space when a pet needs it','Easy access to the dog park','Plenty of company throughout the day','Trial day available for new guests','Vet visit support if necessary'];
+  items.forEach((item,i)=>{if(careCopy[i]) item.textContent=careCopy[i];});
+  const card=careSection.querySelector('.care-card p');if(card) card.textContent='We host a limited number of guests so the atmosphere stays calm and every animal gets enough time and supervision.';
+}
+
+const experience=document.querySelector('.experience-section');
+if(experience){
+  const cards=experience.querySelectorAll('.experience-grid article');
+  if(cards[1]) cards[1].querySelector('p').textContent='A gentler pace, comfortable rest and support around the habits they already know.';
+  if(cards[3]){cards[3].querySelector('h3').textContent='Familiar schedules';cards[3].querySelector('p').textContent='Meals, walks and rest can follow the timing your pet is used to at home.';}
+}
+
+const processSection=document.querySelector('#process');
+if(processSection){
+  const steps=processSection.querySelectorAll('.steps article');
+  if(steps[0]) steps[0].querySelector('p').textContent='Tell us about your pet and the dates you need.';
+  if(steps[2]) steps[2].querySelector('p').textContent='We handle their day-to-day routine while you enjoy your time away.';
+}
+
+const contactOriginal=document.querySelector('#contact');
+if(contactOriginal){
+  const leftCopy=contactOriginal.querySelector(':scope > div:first-child > p:last-child');if(leftCopy) leftCopy.textContent='Send us your dates and we’ll confirm availability and your exact rate.';
+  const cardCopy=contactOriginal.querySelector('.contact-card > p');if(cardCopy) cardCopy.textContent='Use the form above or choose the contact method that is easiest for you.';
+}
+
+const peaceSection=[...document.querySelectorAll('section.testimonial')].find(s=>s.textContent.includes('PEACE OF MIND'));
+if(peaceSection) peaceSection.remove();
+
 /* Extra walk photos */
 const walkGallery=document.querySelector('.walk-gallery');
 if(walkGallery){
@@ -21,10 +66,10 @@ if(guestsSection){
   const reviews=[
     'We were always kept updated throughout the stay. We received regular photos and videos and always knew our dog was happy and well cared for.',
     'Our dog settled in so well that when it was time to go home, he clearly didn’t want to leave! It was wonderful to see how comfortable he felt there.',
-    'We felt completely at ease leaving our pet here. Communication was easy, they were always available, and we received updates throughout the stay.',
+    'We felt completely at ease leaving our pet here. Communication was easy, they were always available, and we knew our pet was in good hands.',
     'You can really see that the animals are treated like part of the family. Our dog received lots of attention, walks and affection.',
-    'We were nervous about leaving our pet at first, but after seeing the photos and videos, we quickly relaxed. He looked completely at home.',
-    'I found Pet House through Reddit while looking for a pet sitter, and I’m so glad I did. They were always in touch and sent me photos and videos throughout the stay. My dog was so comfortable with them that he actually seemed sad to leave! I would definitely recommend them.'
+    'We were nervous about leaving our pet at first, but after seeing how relaxed he looked, we quickly felt comfortable too.',
+    'I found Pet House through Reddit while looking for a pet sitter, and I’m so glad I did. They were easy to reach throughout the stay, and my dog was so comfortable there that he actually seemed sad to leave! I would definitely recommend them.'
   ];
   const section=document.createElement('section');section.id='reviews';section.className='section reviews-section';
   section.innerHTML='<div class="section-head"><p class="eyebrow">REVIEWS</p><h2>What pet owners say</h2><p>Feedback we regularly receive from the families whose pets stay with us.</p></div><div class="reviews-grid">'+reviews.map(text=>'<article class="review-card"><div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div><p>“'+text+'”</p><div class="review-paw">🐾</div></article>').join('')+'</div>';
@@ -48,11 +93,11 @@ if(contactSection){
     const oldPrimary=contactCard.querySelector('.btn.primary');if(oldPrimary)oldPrimary.remove();
     const oldHandle=contactCard.querySelector('small');if(oldHandle)oldHandle.remove();
     const bookingOptions=document.createElement('div');bookingOptions.className='booking-options';
-    bookingOptions.innerHTML='<a class="booking-option telegram-book" href="https://t.me/pethouse_pp" target="_blank" rel="noopener"><span>✈️</span><strong>Check availability on Telegram</strong><small>@pethouse_pp</small></a><a class="booking-option instagram-book" href="https://www.instagram.com/pet.house.by/" target="_blank" rel="noopener"><span>◎</span><strong>Message us on Instagram</strong><small>@pet.house.by</small></a><a class="booking-option email-book" href="mailto:contact.veronika.inbox@gmail.com"><span>✉️</span><strong>Send us an email</strong><small>contact.veronika.inbox@gmail.com</small></a>';
+    bookingOptions.innerHTML='<a class="booking-option telegram-book" href="https://t.me/pethouse_pp" target="_blank" rel="noopener"><span>✈️</span><strong>Message us on Telegram</strong><small>@pethouse_pp</small></a><a class="booking-option instagram-book" href="https://www.instagram.com/pet.house.by/" target="_blank" rel="noopener"><span>◎</span><strong>Message us on Instagram</strong><small>@pet.house.by</small></a><a class="booking-option email-book" href="mailto:contact.veronika.inbox@gmail.com"><span>✉️</span><strong>Send us an email</strong><small>contact.veronika.inbox@gmail.com</small></a>';
     contactCard.appendChild(bookingOptions);
   }
   const cta=document.createElement('section');cta.className='booking-banner';
-  cta.innerHTML='<div><p class="eyebrow">READY TO PLAN A STAY?</p><h2>Check your dates with Pet House</h2><p>Send us your dates and a little about your pet. We’ll let you know availability and the price for their stay.</p></div><div class="booking-banner-actions"><a href="#booking-form" class="btn booking-main">Check availability</a><a href="#booking-form" class="btn booking-secondary">Book a stay</a></div>';
+  cta.innerHTML='<div><p class="eyebrow">READY TO PLAN A STAY?</p><h2>Check your dates with Pet House</h2><p>Share your dates and we’ll confirm availability and the exact rate for your pet.</p></div><div class="booking-banner-actions"><a href="#booking-form" class="btn booking-main">Check availability</a><a href="#booking-form" class="btn booking-secondary">Book a stay</a></div>';
   contactSection.insertAdjacentElement('beforebegin',cta);
 }
 
@@ -63,7 +108,7 @@ document.head.appendChild(bookingStyle);
 /* Real booking form submission — stays on the website */
 if(contactSection&&!document.querySelector('#booking-form')){
   const formSection=document.createElement('section');formSection.id='booking-form';formSection.className='section booking-form-section';
-  formSection.innerHTML='<div class="section-head"><p class="eyebrow">BOOKING REQUEST</p><h2>Tell us about your pet</h2><p>Fill in the essentials and send your request. We’ll reply with availability and pricing.</p></div><form class="pet-booking-form"><div class="form-grid"><label><span>Pet’s name *</span><input name="Pet name" type="text" placeholder="e.g. Luna" required></label><label><span>Pet type *</span><select name="Pet type" required><option value="">Choose</option><option>Dog</option><option>Cat</option></select></label><label><span>Age *</span><input name="Age" type="text" placeholder="e.g. 3 years" required></label><label><span>Breed / type</span><input name="Breed / type" type="text" placeholder="Optional"></label><label><span>Check-in *</span><input name="Check-in" type="date" required></label><label><span>Check-out *</span><input name="Check-out" type="date" required></label><label class="full"><span>Special care, medication or anything we should know</span><textarea name="Special care" rows="4" placeholder="Temperament, feeding routine, medication, anxiety, habits, etc."></textarea></label><label><span>Your name *</span><input name="Owner name" type="text" required></label><label><span>Best contact *</span><input name="Best contact" type="text" placeholder="Telegram, Instagram, email or phone" required></label></div><label class="form-consent"><input name="Vaccinations confirmed" type="checkbox" value="Yes"><span>My pet has up-to-date vaccinations and recent parasite/deworming treatment.</span></label><input type="text" name="_honey" class="form-honey" tabindex="-1" autocomplete="off"><input type="hidden" name="_subject" value="New Pet House booking request"><input type="hidden" name="_template" value="table"><div class="form-actions"><button class="btn primary form-submit" type="submit">Send booking request</button><button class="btn secondary copy-request" type="button">Copy request</button></div><p class="form-note">Your request is sent directly to Pet House. No email app will open.</p><div class="form-status" role="status" aria-live="polite"></div></form>';
+  formSection.innerHTML='<div class="section-head"><p class="eyebrow">BOOKING REQUEST</p><h2>Tell us about your pet</h2><p>Share the essentials below and we’ll reply with your exact quote.</p></div><form class="pet-booking-form"><div class="form-grid"><label><span>Pet’s name *</span><input name="Pet name" type="text" placeholder="e.g. Luna" required></label><label><span>Pet type *</span><select name="Pet type" required><option value="">Choose</option><option>Dog</option><option>Cat</option></select></label><label><span>Age *</span><input name="Age" type="text" placeholder="e.g. 3 years" required></label><label><span>Breed / type</span><input name="Breed / type" type="text" placeholder="Optional"></label><label><span>Check-in *</span><input name="Check-in" type="date" required></label><label><span>Check-out *</span><input name="Check-out" type="date" required></label><label class="full"><span>Special care, medication or anything we should know</span><textarea name="Special care" rows="4" placeholder="Temperament, feeding routine, medication, anxiety, habits, etc."></textarea></label><label><span>Your name *</span><input name="Owner name" type="text" required></label><label><span>Best contact *</span><input name="Best contact" type="text" placeholder="Telegram, Instagram, email or phone" required></label></div><label class="form-consent"><input name="Vaccinations confirmed" type="checkbox" value="Yes"><span>My pet has up-to-date vaccinations and recent parasite/deworming treatment.</span></label><input type="text" name="_honey" class="form-honey" tabindex="-1" autocomplete="off"><input type="hidden" name="_subject" value="New Pet House booking request"><input type="hidden" name="_template" value="table"><div class="form-actions"><button class="btn primary form-submit" type="submit">Send booking request</button><button class="btn secondary copy-request" type="button">Copy request</button></div><p class="form-note">Your request is sent directly to Pet House. No email app will open.</p><div class="form-status" role="status" aria-live="polite"></div></form>';
   const banner=document.querySelector('.booking-banner');if(banner)banner.insertAdjacentElement('beforebegin',formSection);else contactSection.insertAdjacentElement('beforebegin',formSection);
 
   const form=formSection.querySelector('.pet-booking-form');
