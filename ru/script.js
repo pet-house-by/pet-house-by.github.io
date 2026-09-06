@@ -184,3 +184,28 @@ russianQuotedNodes.forEach(node=>{
     if(Object.prototype.hasOwnProperty.call(russianCopy,inner))node.nodeValue=node.nodeValue.replace(key,'“'+russianCopy[inner]+'”');
   }
 });
+
+
+/* Remaining labels from the shared English markup. */
+Object.assign(russianCopy,{
+  "Easy access to outdoor space":"Лёгкий доступ к прогулкам на улице",
+  "Fresh air & movement":"Свежий воздух и движение",
+  "Time outside for exercise and enrichment":"Время на улице для активности и новых впечатлений",
+  "Trial day available for new guests":"Пробный день для новых гостей",
+  "Vet visit support if necessary":"Помощь с визитом к ветеринару при необходимости",
+  "Puppies & kittens":"Щенки и котята",
+  "Extra attention, frequent routines and patient supervision for younger pets.":"Дополнительное внимание, частый привычный режим и терпеливый присмотр за малышами.",
+  "Pickup & drop-off":"Забор и доставка",
+  "Can be arranged around Phnom Penh depending on availability.":"Можно организовать по Пномпеню при наличии возможности.",
+  "$6.99/day":"$6.99/день",
+  "Pet House logo":"Логотип Pet House"
+});
+const russianFinalWalker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+const russianFinalNodes=[];
+while(russianFinalWalker.nextNode())russianFinalNodes.push(russianFinalWalker.currentNode);
+russianFinalNodes.forEach(node=>{node.nodeValue=translateRussianText(node.nodeValue);});
+document.querySelectorAll('[placeholder],[aria-label],[title],[alt]').forEach(el=>{
+  ['placeholder','aria-label','title','alt'].forEach(attr=>{
+    if(el.hasAttribute(attr))el.setAttribute(attr,translateRussianText(el.getAttribute(attr)));
+  });
+});
