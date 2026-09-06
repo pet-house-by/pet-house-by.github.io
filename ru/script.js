@@ -1,0 +1,173 @@
+const menu=document.querySelector('.menu');
+const nav=document.querySelector('.site-header nav');
+menu.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));menu.textContent=open?'✕':'☰'});
+nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu.setAttribute('aria-expanded','false');menu.textContent='☰'}));
+document.getElementById('year').textContent=new Date().getFullYear();
+
+/* Copy cleanup: keep each section focused on a different benefit */
+const serviceCards=document.querySelectorAll('#services article');
+if(serviceCards[0]) serviceCards[0].querySelector('p').textContent='Comfortable home-based boarding tailored to your pet’s usual routine.';
+if(serviceCards[1]) serviceCards[1].querySelector('p').textContent='Walks, play, meals and rest are planned around the schedule your dog already knows.';
+
+const homeLife=document.querySelector('.home-life-section');
+if(homeLife){
+  const heading=homeLife.querySelector('h2');if(heading) heading.textContent='Comfort, company and a familiar routine';
+  const lead=homeLife.querySelector('.lead-copy');if(lead) lead.textContent='Pets stay with us in our air-conditioned home and are treated as part of the household. Because we are home most of the time, they have company throughout the day and plenty of time to settle in at their own pace.';
+  const chips=homeLife.querySelectorAll('.feature-chips span');if(chips[3]) chips[3].textContent='💙 Plenty of company';
+  const note=homeLife.querySelector('.home-note p');if(note) note.textContent='Feeding, rest, play and walks are kept as close as possible to what your pet already knows.';
+}
+
+const careSection=document.querySelector('#care');
+if(careSection){
+  const intro=careSection.querySelector('div > p:not(.eyebrow)');if(intro) intro.textContent='Every animal has a different personality. Some want to play, some need quiet space, and some simply prefer to stay close to a person. We give each guest the pace and space that suits them.';
+  const items=careSection.querySelectorAll('.checks li');
+  const careCopy=['Feeding and rest schedules kept familiar','Quiet space when a pet needs it','Easy access to the dog park','Plenty of company throughout the day','Trial day available for new guests','Vet visit support if necessary'];
+  items.forEach((item,i)=>{if(careCopy[i]) item.textContent=careCopy[i];});
+  const card=careSection.querySelector('.care-card p');if(card) card.textContent='We host a limited number of guests so the atmosphere stays calm and every animal gets enough time and supervision.';
+}
+
+const experience=document.querySelector('.experience-section');
+if(experience){
+  const cards=experience.querySelectorAll('.experience-grid article');
+  if(cards[1]) cards[1].querySelector('p').textContent='A gentler pace, comfortable rest and support around the habits they already know.';
+  if(cards[3]){cards[3].querySelector('h3').textContent='Familiar schedules';cards[3].querySelector('p').textContent='Meals, walks and rest can follow the timing your pet is used to at home.';}
+}
+
+const processSection=document.querySelector('#process');
+if(processSection){
+  const steps=processSection.querySelectorAll('.steps article');
+  if(steps[0]) steps[0].querySelector('p').textContent='Tell us about your pet and the dates you need.';
+  if(steps[2]) steps[2].querySelector('p').textContent='We handle their day-to-day routine while you enjoy your time away.';
+}
+
+const contactOriginal=document.querySelector('#contact');
+if(contactOriginal){
+  const leftCopy=contactOriginal.querySelector(':scope > div:first-child > p:last-child');if(leftCopy) leftCopy.textContent='Send us your dates and we’ll confirm availability and your exact rate.';
+  const cardCopy=contactOriginal.querySelector('.contact-card > p');if(cardCopy) cardCopy.textContent='Use the form above or choose the contact method that is easiest for you.';
+}
+
+const peaceSection=[...document.querySelectorAll('section.testimonial')].find(s=>s.textContent.includes('PEACE OF MIND'));
+if(peaceSection) peaceSection.remove();
+
+/* Extra walk photos */
+const walkGallery=document.querySelector('.walk-gallery');
+if(walkGallery){
+  ['photo_2026-08-28_06-35-48.jpg','photo_2026-08-28_06-35-53.jpg','photo_2026-08-28_06-36-18.jpg','photo_2026-08-28_06-36-22.jpg','photo_2026-08-28_06-36-24.jpg','photo_2026-08-28_06-38-07.jpg'].forEach(name=>{
+    const figure=document.createElement('figure');
+    const img=document.createElement('img');
+    img.src='../assets/'+name;img.alt='Гость Pet House на прогулке';img.loading='lazy';
+    figure.appendChild(img);walkGallery.appendChild(figure);
+  });
+}
+
+/* Reviews */
+const guestsSection=document.querySelector('#guests');
+if(guestsSection){
+  const reviews=[
+    'We were always kept updated throughout the stay. We received regular photos and videos and always knew our dog was happy and well cared for.',
+    'Our dog settled in so well that when it was time to go home, he clearly didn’t want to leave! It was wonderful to see how comfortable he felt there.',
+    'We felt completely at ease leaving our pet here. Communication was easy, they were always available, and we knew our pet was in good hands.',
+    'You can really see that the animals are treated like part of the family. Our dog received lots of attention, walks and affection.',
+    'We were nervous about leaving our pet at first, but after seeing how relaxed he looked, we quickly felt comfortable too.',
+    'I found Pet House through Reddit while looking for a pet sitter, and I’m so glad I did. They were easy to reach throughout the stay, and my dog was so comfortable there that he actually seemed sad to leave! I would definitely recommend them.'
+  ];
+  const section=document.createElement('section');section.id='reviews';section.className='section reviews-section';
+  section.innerHTML='<div class="section-head"><p class="eyebrow">REVIEWS</p><h2>What pet owners say</h2><p>Feedback we regularly receive from the families whose pets stay with us.</p></div><div class="reviews-grid">'+reviews.map(text=>'<article class="review-card"><div class="review-stars" aria-label="5 out of 5 stars">★★★★★</div><p>“'+text+'”</p><div class="review-paw">🐾</div></article>').join('')+'</div>';
+  guestsSection.insertAdjacentElement('afterend',section);
+  const reviewsLink=document.createElement('a');reviewsLink.href='#reviews';reviewsLink.textContent='Reviews';
+  const dogParkLink=nav.querySelector('a[href="#walks"]');if(dogParkLink)nav.insertBefore(reviewsLink,dogParkLink);
+  const style=document.createElement('style');
+  style.textContent='.reviews-section{max-width:none;background:linear-gradient(180deg,#fff,#f4fbff);padding-left:max(28px,calc((100% - 1180px)/2));padding-right:max(28px,calc((100% - 1180px)/2))}.reviews-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.review-card{position:relative;background:#fff;border:1px solid var(--line);border-radius:24px;padding:28px 28px 48px;box-shadow:0 12px 34px rgba(34,93,122,.08);min-height:220px}.review-stars{letter-spacing:3px;color:#d8a92e;font-size:18px;margin-bottom:14px}.review-card p{margin:0;color:#425d70;font-size:15px;line-height:1.75}.review-paw{position:absolute;right:22px;bottom:16px;opacity:.35;font-size:21px}@media(max-width:850px){.reviews-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.reviews-grid{grid-template-columns:1fr}.review-card{min-height:0;padding:24px 24px 44px}}';
+  document.head.appendChild(style);
+}
+
+/* Strong booking CTAs */
+const heroPrimary=document.querySelector('.hero-actions .primary');
+if(heroPrimary){heroPrimary.textContent='Check availability';heroPrimary.href='#booking-form';}
+if(nav&&!nav.querySelector('.nav-booking-cta')){const navCta=document.createElement('a');navCta.href='#booking-form';navCta.className='nav-booking-cta';navCta.textContent='Check availability';nav.appendChild(navCta);}
+
+const contactSection=document.querySelector('#contact');
+if(contactSection){
+  const contactCard=contactSection.querySelector('.contact-card');
+  if(contactCard){
+    const oldPrimary=contactCard.querySelector('.btn.primary');if(oldPrimary)oldPrimary.remove();
+    const oldHandle=contactCard.querySelector('small');if(oldHandle)oldHandle.remove();
+    const bookingOptions=document.createElement('div');bookingOptions.className='booking-options';
+    bookingOptions.innerHTML='<a class="booking-option telegram-book" href="https://t.me/pethouse_pp" target="_blank" rel="noopener"><span>✈️</span><strong>Message us on Telegram</strong><small>@pethouse_pp</small></a><a class="booking-option instagram-book" href="https://www.instagram.com/pet.house.by/" target="_blank" rel="noopener"><span>◎</span><strong>Message us on Instagram</strong><small>@pet.house.by</small></a><a class="booking-option email-book" href="mailto:contact.veronika.inbox@gmail.com"><span>✉️</span><strong>Send us an email</strong><small>contact.veronika.inbox@gmail.com</small></a>';
+    contactCard.appendChild(bookingOptions);
+  }
+  const cta=document.createElement('section');cta.className='booking-banner';
+  cta.innerHTML='<div><p class="eyebrow">READY TO PLAN A STAY?</p><h2>Check your dates with Pet House</h2><p>Share your dates and we’ll confirm availability and the exact rate for your pet.</p></div><div class="booking-banner-actions"><a href="#booking-form" class="btn booking-main">Check availability</a><a href="#booking-form" class="btn booking-secondary">Book a stay</a></div>';
+  contactSection.insertAdjacentElement('beforebegin',cta);
+}
+
+const bookingStyle=document.createElement('style');
+bookingStyle.textContent='.nav-booking-cta{background:var(--accent)!important;color:#08344c!important;padding:10px 17px;border-radius:999px;box-shadow:0 8px 20px rgba(62,165,217,.24);font-weight:800}.nav-booking-cta:hover{transform:translateY(-1px);color:#08344c!important}.booking-banner{max-width:1120px;margin:40px auto 20px;padding:38px 42px;border-radius:30px;background:linear-gradient(135deg,#17334a,#235b78);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:40px;box-shadow:0 22px 55px rgba(23,51,74,.22)}.booking-banner .eyebrow{color:#8edbff}.booking-banner h2{font-family:Georgia,serif;font-size:clamp(31px,4vw,46px);line-height:1.12;margin:0 0 10px;color:#fff}.booking-banner p:last-child{margin:0;color:#dbeaf2;max-width:660px}.booking-banner-actions{display:flex;gap:12px;flex-shrink:0}.booking-main{background:#6ac7f4;color:#082f45;box-shadow:0 12px 28px rgba(79,183,234,.3)}.booking-secondary{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.55)}.booking-options{display:grid;gap:10px;margin-top:18px}.booking-option{display:grid;grid-template-columns:38px 1fr;grid-template-rows:auto auto;column-gap:11px;align-items:center;padding:14px 16px;border-radius:17px;border:1px solid var(--line);background:#fff;transition:.2s}.booking-option:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(31,80,106,.1)}.booking-option>span{grid-row:1/3;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--blue2);font-size:18px}.booking-option strong{font-size:14px;line-height:1.2}.booking-option small{display:block!important;text-align:left!important;font-size:11px;color:var(--muted);margin-top:3px}.telegram-book>span{color:#229ed9}.instagram-book>span{color:#c62f74}.email-book>span{color:var(--accent2)}@media(max-width:1050px){.site-header nav{gap:12px;font-size:13px}.nav-booking-cta{padding:9px 12px}}@media(max-width:850px){.nav-booking-cta{background:var(--accent)!important;text-align:center}.booking-banner{margin:28px 18px 10px;padding:30px;flex-direction:column;align-items:flex-start}.booking-banner-actions{width:100%}.booking-banner-actions .btn{flex:1}}@media(max-width:520px){.booking-banner{padding:26px 22px;border-radius:24px}.booking-banner-actions{flex-direction:column}.booking-banner-actions .btn{width:100%}}';
+document.head.appendChild(bookingStyle);
+
+/* Real booking form submission — stays on the website */
+if(contactSection&&!document.querySelector('#booking-form')){
+  const formSection=document.createElement('section');formSection.id='booking-form';formSection.className='section booking-form-section';
+  formSection.innerHTML='<div class="section-head"><p class="eyebrow">BOOKING REQUEST</p><h2>Tell us about your pet</h2><p>Share the essentials below and we’ll reply with your exact quote.</p></div><form class="pet-booking-form"><div class="form-grid"><label><span>Pet’s name *</span><input name="Pet name" type="text" placeholder="e.g. Luna" required></label><label><span>Pet type *</span><select name="Pet type" required><option value="">Choose</option><option>Dog</option><option>Cat</option></select></label><label><span>Age *</span><input name="Age" type="text" placeholder="e.g. 3 years" required></label><label><span>Breed / type</span><input name="Breed / type" type="text" placeholder="Optional"></label><label><span>Check-in *</span><input name="Check-in" type="date" required></label><label><span>Check-out *</span><input name="Check-out" type="date" required></label><label class="full"><span>Special care, medication or anything we should know</span><textarea name="Special care" rows="4" placeholder="Temperament, feeding routine, medication, anxiety, habits, etc."></textarea></label><label><span>Your name *</span><input name="Owner name" type="text" required></label><label><span>Best contact *</span><input name="Best contact" type="text" placeholder="Telegram, Instagram, email or phone" required></label></div><label class="form-consent"><input name="Vaccinations confirmed" type="checkbox" value="Yes"><span>My pet has up-to-date vaccinations and recent parasite/deworming treatment.</span></label><input type="text" name="_honey" class="form-honey" tabindex="-1" autocomplete="off"><input type="hidden" name="_subject" value="New Запрос на передержку Pet House"><input type="hidden" name="_template" value="table"><div class="form-actions"><button class="btn primary form-submit" type="submit">Отправить запрос</button><button class="btn secondary copy-request" type="button">Скопировать запрос</button></div><p class="form-note">Your request is sent directly to Pet House. No email app will open.</p><div class="form-status" role="status" aria-live="polite"></div></form>';
+  const banner=document.querySelector('.booking-banner');if(banner)banner.insertAdjacentElement('beforebegin',formSection);else contactSection.insertAdjacentElement('beforebegin',formSection);
+
+  const form=formSection.querySelector('.pet-booking-form');
+  const submitButton=form.querySelector('.form-submit');
+  const status=form.querySelector('.form-status');
+  const buildRequest=()=>{const data=new FormData(form);return 'Запрос на передержку Pet House\n\nИмя питомца: '+(data.get('Pet name')||'')+'\nВид питомца: '+(data.get('Pet type')||'')+'\nВозраст: '+(data.get('Age')||'')+'\nПорода / тип: '+(data.get('Breed / type')||'Не указано')+'\nЗаезд: '+(data.get('Check-in')||'')+'\nВыезд: '+(data.get('Check-out')||'')+'\nОсобый уход: '+(data.get('Special care')||'Не указано')+'\n\nИмя владельца: '+(data.get('Owner name')||'')+'\nКонтакт для связи: '+(data.get('Best contact')||'')+'\nПрививки и обработка от паразитов подтверждены: '+(data.get('Vaccinations confirmed')?'Yes':'Не подтверждено');};
+
+  form.addEventListener('submit',async e=>{
+    e.preventDefault();
+    if(!form.reportValidity())return;
+    submitButton.disabled=true;submitButton.textContent='Отправляем…';status.className='form-status';status.textContent='';
+    const payload=Object.fromEntries(new FormData(form).entries());
+    try{
+      const response=await fetch('https://formsubmit.co/ajax/contact.veronika.inbox@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)});
+      const result=await response.json();
+      if(!response.ok||result.success===false)throw new Error(result.message||'Submission failed');
+      form.reset();
+      status.className='form-status success';
+      status.innerHTML='<strong>Спасибо! Ваш запрос отправлен.</strong><span>Скоро с вами свяжемся.</span>';
+      submitButton.textContent='Отправлено ✓';
+      setTimeout(()=>{submitButton.disabled=false;submitButton.textContent='Отправить запрос';},3000);
+    }catch(error){
+      status.className='form-status error';
+      status.innerHTML='<strong>Не удалось отправить запрос.</strong><span>Попробуйте ещё раз или напишите нам в Telegram @pethouse_pp.</span>';
+      submitButton.disabled=false;submitButton.textContent='Отправить запрос';
+    }
+  });
+
+  formSection.querySelector('.copy-request').addEventListener('click',async e=>{if(!form.reportValidity())return;try{await navigator.clipboard.writeText(buildRequest());e.currentTarget.textContent='Скопировано ✓';setTimeout(()=>e.currentTarget.textContent='Скопировать запрос',1800);}catch(err){alert('Пожалуйста, скопируйте данные формы вручную.');}});
+
+  const formStyle=document.createElement('style');
+  formStyle.textContent='.booking-form-section{padding-top:80px;padding-bottom:80px}.pet-booking-form{max-width:920px;margin:0 auto;padding:34px;border:1px solid var(--line);border-radius:28px;background:linear-gradient(145deg,#fff,#f6fbff);box-shadow:var(--shadow)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.form-grid label{display:flex;flex-direction:column;gap:7px}.form-grid label.full{grid-column:1/3}.form-grid label>span,.form-consent span{font-weight:750;font-size:13px;color:var(--ink)}.pet-booking-form input,.pet-booking-form select,.pet-booking-form textarea{width:100%;border:1px solid #cfe0e9;border-radius:14px;background:#fff;color:var(--ink);font:inherit;padding:13px 14px;outline:none;transition:.2s}.pet-booking-form textarea{resize:vertical;min-height:110px}.pet-booking-form input:focus,.pet-booking-form select:focus,.pet-booking-form textarea:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(89,185,233,.13)}.form-consent{display:flex;align-items:flex-start;gap:10px;margin:20px 2px}.form-consent input{width:18px;height:18px;margin-top:2px;flex:0 0 auto}.form-actions{display:flex;gap:12px;margin-top:20px}.form-actions .btn{border:0;cursor:pointer;font:inherit}.form-actions .btn:disabled{opacity:.65;cursor:wait}.form-note{font-size:12px;color:var(--muted);margin:14px 0 0}.copy-request{background:#fff}.form-honey{display:none!important}.form-status{margin-top:18px;border-radius:16px;padding:0;display:flex;flex-direction:column;gap:3px}.form-status.success,.form-status.error{padding:16px 18px}.form-status.success{background:#eefbf4;border:1px solid #bfe8cf;color:#1f6541}.form-status.error{background:#fff3f3;border:1px solid #f0caca;color:#8b3535}.form-status strong{font-size:15px}.form-status span{font-size:13px}@media(max-width:650px){.pet-booking-form{padding:24px 18px}.form-grid{grid-template-columns:1fr}.form-grid label.full{grid-column:auto}.form-actions{flex-direction:column}.form-actions .btn{width:100%}}';
+  document.head.appendChild(formStyle);
+}
+
+/* Pricing */
+const servicesSection=document.querySelector('#services');
+if(servicesSection&&!document.querySelector('#pricing')){
+  const pricing=document.createElement('section');pricing.id='pricing';pricing.className='pricing-mini';
+  pricing.innerHTML='<div class="pricing-mini-inner"><div><p class="eyebrow">PRICING</p><h2>Boarding from <strong>$6.99/day</strong></h2><p>Rates depend on the pet, length of stay and care required — contact us for a quote.</p></div><a class="btn primary" href="#booking-form">Get a quote</a></div>';
+  servicesSection.insertAdjacentElement('afterend',pricing);
+  const priceLink=document.createElement('a');priceLink.href='#pricing';priceLink.textContent='Pricing';const reviewsNav=nav.querySelector('a[href="#reviews"]');if(reviewsNav)nav.insertBefore(priceLink,reviewsNav);else nav.appendChild(priceLink);
+  const priceStyle=document.createElement('style');
+  priceStyle.textContent='.pricing-mini{max-width:1120px;margin:0 auto 35px;padding:0 28px}.pricing-mini-inner{display:flex;align-items:center;justify-content:space-between;gap:35px;padding:30px 36px;border:1px solid #cfe5f0;border-radius:26px;background:linear-gradient(135deg,#eef9ff,#fff);box-shadow:0 12px 34px rgba(34,93,122,.07)}.pricing-mini .eyebrow{margin-bottom:5px}.pricing-mini h2{font-family:Georgia,serif;font-size:clamp(27px,3vw,38px);line-height:1.15;margin:0 0 7px}.pricing-mini h2 strong{color:var(--accent2);font-size:1.12em}.pricing-mini p:last-child{margin:0;color:var(--muted)}.pricing-mini .btn{flex-shrink:0}@media(max-width:650px){.pricing-mini{padding:0 18px}.pricing-mini-inner{padding:25px 22px;align-items:flex-start;flex-direction:column}.pricing-mini .btn{width:100%}}';
+  document.head.appendChild(priceStyle);
+}
+
+/* Russian-language copy for the Russian version */
+const russianCopy={"Comfortable home-based boarding tailored to your pet’s usual routine.":"Уютная домашняя передержка с учётом привычного режима питомца.","Walks, play, meals and rest are planned around the schedule your dog already knows.":"Прогулки, игры, кормление и отдых — по привычному для собаки расписанию.","Comfort, company and a familiar routine":"Комфорт, общение и привычный режим","Pets stay with us in our air-conditioned home and are treated as part of the household. Because we are home most of the time, they have company throughout the day and plenty of time to settle in at their own pace.":"Питомцы живут с нами в доме с кондиционером и становятся частью семьи. Мы большую часть времени дома, поэтому у них есть компания в течение дня и время, чтобы спокойно освоиться.","💙 Plenty of company":"💙 Много общения","Feeding, rest, play and walks are kept as close as possible to what your pet already knows.":"Стараемся максимально сохранить привычные питомцу кормление, отдых, игры и прогулки.","Every animal has a different personality. Some want to play, some need quiet space, and some simply prefer to stay close to a person. We give each guest the pace and space that suits them.":"У каждого животного свой характер. Кому-то хочется играть, кому-то нужно тихое место, а кто-то предпочитает быть рядом с человеком. Каждому гостю даём подходящий ему темп и пространство.","Feeding and rest schedules kept familiar":"Сохраняем привычный режим кормления и отдыха","Quiet space when a pet needs it":"Тихое место, когда оно нужно питомцу","Easy access to the dog park":"Удобный доступ к дог-парку","Plenty of company throughout the day":"Много общения в течение дня","We host a limited number of guests so the atmosphere stays calm and every animal gets enough time and supervision.":"Мы принимаем ограниченное число гостей, чтобы атмосфера оставалась спокойной, а каждому животному хватало времени и внимания.","A gentler pace, comfortable rest and support around the habits they already know.":"Более спокойный темп, комфортный отдых и забота с учётом знакомых привычек.","Familiar schedules":"Привычный режим","Meals, walks and rest can follow the timing your pet is used to at home.":"Кормление, прогулки и отдых можно выстроить по привычному для питомца домашнему расписанию.","Tell us about your pet and the dates you need.":"Расскажите о питомце и нужных вам датах.","We handle their day-to-day routine while you enjoy your time away.":"Мы берём на себя повседневный уход, пока вы отдыхаете или путешествуете.","Send us your dates and we’ll confirm availability and your exact rate.":"Напишите нам даты — подтвердим наличие мест и точную стоимость.","Use the form above or choose the contact method that is easiest for you.":"Заполните форму выше или выберите самый удобный способ связи.","REVIEWS":"ОТЗЫВЫ","What pet owners say":"Что говорят владельцы питомцев","Feedback we regularly receive from the families whose pets stay with us.":"Отзывы семей, чьи питомцы останавливались у нас.","5 out of 5 stars":"5 из 5 звёзд","We were always kept updated throughout the stay. We received regular photos and videos and always knew our dog was happy and well cared for.":"Нас всегда держали в курсе во время передержки. Мы регулярно получали фото и видео и знали, что наша собака счастлива и окружена заботой.","Our dog settled in so well that when it was time to go home, he clearly didn’t want to leave! It was wonderful to see how comfortable he felt there.":"Наша собака так хорошо освоилась, что, когда пришло время ехать домой, ей явно не хотелось уезжать! Было прекрасно видеть, насколько ей там комфортно.","We felt completely at ease leaving our pet here. Communication was easy, they were always available, and we knew our pet was in good hands.":"Мы совершенно спокойно оставили здесь своего питомца. Было легко общаться, нам всегда отвечали, и мы знали, что питомец в надёжных руках.","You can really see that the animals are treated like part of the family. Our dog received lots of attention, walks and affection.":"Сразу видно, что к животным относятся как к членам семьи. Наша собака получила много внимания, прогулок и ласки.","We were nervous about leaving our pet at first, but after seeing how relaxed he looked, we quickly felt comfortable too.":"Сначала мы переживали, оставляя питомца, но, увидев, каким расслабленным он был, быстро успокоились.","I found Pet House through Reddit while looking for a pet sitter, and I’m so glad I did. They were easy to reach throughout the stay, and my dog was so comfortable there that he actually seemed sad to leave! I would definitely recommend them.":"Я нашла Pet House через Reddit, когда искала петситтера, и очень рада этому. На связи было легко оставаться всю передержку, а моей собаке там было так комфортно, что ей даже было грустно уезжать. Однозначно рекомендую.","Reviews":"Отзывы","Check availability":"Проверить даты","Message us on Telegram":"Написать в Telegram","Message us on Instagram":"Написать в Instagram","Send us an email":"Написать на email","READY TO PLAN A STAY?":"ГОТОВЫ СПЛАНИРОВАТЬ ПЕРЕДЕРЖКУ?","Check your dates with Pet House":"Проверьте даты с Pet House","Share your dates and we’ll confirm availability and the exact rate for your pet.":"Напишите даты — подтвердим наличие мест и точную стоимость для вашего питомца.","Book a stay":"Забронировать передержку","BOOKING REQUEST":"ЗАПРОС НА ПЕРЕДЕРЖКУ","Tell us about your pet":"Расскажите о питомце","Share the essentials below and we’ll reply with your exact quote.":"Заполните основные данные ниже — и мы ответим с точной стоимостью.","Pet’s name *":"Имя питомца *","Pet type *":"Вид питомца *","Choose":"Выберите","Dog":"Собака","Cat":"Кот","Age *":"Возраст *","e.g. 3 years":"например, 3 года","Breed / type":"Порода / тип","Optional":"Необязательно","Check-in *":"Заезд *","Check-out *":"Выезд *","Special care, medication or anything we should know":"Особый уход, лекарства или всё важное, что нам нужно знать","Temperament, feeding routine, medication, anxiety, habits, etc.":"Характер, режим кормления, лекарства, тревожность, привычки и т. д.","Your name *":"Ваше имя *","Best contact *":"Лучший способ связи *","Telegram, Instagram, email or phone":"Telegram, Instagram, email или телефон","My pet has up-to-date vaccinations and recent parasite/deworming treatment.":"У моего питомца актуальные прививки и недавняя обработка от паразитов и глистов.","Your request is sent directly to Pet House. No email app will open.":"Запрос отправляется напрямую в Pet House. Почтовое приложение не откроется.","PRICING":"СТОИМОСТЬ","Boarding from":"Передержка от","Rates depend on the pet, length of stay and care required — contact us for a quote.":"Стоимость зависит от питомца, длительности передержки и необходимой заботы — напишите нам для расчёта.","Get a quote":"Узнать стоимость","No cages or kennels — just a real home, individual care and regular photo & video updates.":"Без клеток и вольеров — только настоящий дом, индивидуальная забота и регулярные фото и видео.","Daily updates":"Ежедневные новости","Photos & videos while you're away":"Фото и видео, пока вас нет рядом","Dogs & cats":"Собаки и коты","Thoughtful care for both":"Заботливый уход для всех","Home boarding":"Домашняя передержка","Walks & daily routine":"Прогулки и привычный режим","Fresh air, play and plenty of outdoor time":"Свежий воздух, игры и много времени на улице","We have access to a dog park right on the property, giving our dog guests a comfortable place for regular walks, movement and outdoor time throughout their stay.":"На территории есть доступ к дог-парку: у наших гостей-собак есть удобное место для регулярных прогулок, движения и отдыха на свежем воздухе.","DOG PARK & DAILY WALKS":"ДОГ-ПАРК И ЕЖЕДНЕВНЫЕ ПРОГУЛКИ","Pet House guest enjoying a walk":"Гость Pet House на прогулке","Pricing":"Стоимость"};
+const translateRussianText=value=>{
+  const key=value.trim();
+  return Object.prototype.hasOwnProperty.call(russianCopy,key)?value.replace(key,russianCopy[key]):value;
+};
+const russianWalker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+const russianNodes=[];
+while(russianWalker.nextNode())russianNodes.push(russianWalker.currentNode);
+russianNodes.forEach(node=>{node.nodeValue=translateRussianText(node.nodeValue);});
+document.querySelectorAll('[placeholder],[aria-label],[title],[alt]').forEach(el=>{
+  ['placeholder','aria-label','title','alt'].forEach(attr=>{
+    if(el.hasAttribute(attr))el.setAttribute(attr,translateRussianText(el.getAttribute(attr)));
+  });
+});
