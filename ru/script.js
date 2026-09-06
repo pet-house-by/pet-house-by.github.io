@@ -209,3 +209,52 @@ document.querySelectorAll('[placeholder],[aria-label],[title],[alt]').forEach(el
     if(el.hasAttribute(attr))el.setAttribute(attr,translateRussianText(el.getAttribute(attr)));
   });
 });
+
+
+/* Natural Russian wording for interactive blocks. */
+Object.assign(russianCopy,{
+  "Comfortable home-based boarding tailored to your pet’s usual routine.":"Уютная домашняя передержка с привычным для питомца распорядком.",
+  "Walks, play, meals and rest are planned around the schedule your dog already knows.":"Прогулки, игры, кормление и отдых — в привычном для собаки ритме.",
+  "Comfort, company and a familiar routine":"Привычный ритм, внимание и забота",
+  "Pets stay with us in our air-conditioned home and are treated as part of the household. Because we are home most of the time, they have company throughout the day and plenty of time to settle in at their own pace.":"Питомцы живут с нами в доме с кондиционером, а не в клетках. Мы почти всегда дома, поэтому у каждого гостя есть компания, внимание и время спокойно освоиться.",
+  "💙 Plenty of company":"💙 Много общения",
+  "Feeding, rest, play and walks are kept as close as possible to what your pet already knows.":"Сохраняем привычные кормление, отдых, игры и прогулки — так питомцу проще освоиться.",
+  "Every animal has a different personality. Some want to play, some need quiet space, and some simply prefer to stay close to a person. We give each guest the pace and space that suits them.":"У каждого свой характер: кто-то любит играть, кому-то нужно тихое место, а кто-то хочет быть рядом с человеком. Мы это учитываем.",
+  "Feeding and rest schedules kept familiar":"Привычный режим кормления и отдыха",
+  "Quiet space when a pet needs it":"Тихое место, когда оно нужно",
+  "Easy access to the dog park":"Дог-парк рядом с домом",
+  "Plenty of company throughout the day":"Много внимания в течение дня",
+  "We host a limited number of guests so the atmosphere stays calm and every animal gets enough time and supervision.":"Мы не берём много животных одновременно: так дома спокойно, а внимания хватает каждому.",
+  "A gentler pace, comfortable rest and support around the habits they already know.":"Больше покоя и забота в привычном для питомца ритме.",
+  "Familiar schedules":"Привычный ритм",
+  "Meals, walks and rest can follow the timing your pet is used to at home.":"Кормление, прогулки и отдых — по привычному домашнему распорядку.",
+  "Tell us about your pet and the dates you need.":"Расскажите о питомце и нужных датах.",
+  "We handle their day-to-day routine while you enjoy your time away.":"Мы позаботимся о привычном режиме, пока вы в отъезде.",
+  "Send us your dates and we’ll confirm availability and your exact rate.":"Напишите даты — подскажем, есть ли места, и рассчитаем стоимость.",
+  "Use the form above or choose the contact method that is easiest for you.":"Заполните форму выше или напишите нам там, где вам удобнее.",
+  "What pet owners say":"Что говорят хозяева питомцев",
+  "Feedback we regularly receive from the families whose pets stay with us.":"Отзывы владельцев, чьи питомцы уже гостили у нас.",
+  "Check availability":"Узнать, есть ли места",
+  "READY TO PLAN A STAY?":"ГОТОВЫ СПЛАНИРОВАТЬ ПЕРЕДЕРЖКУ?",
+  "Check your dates with Pet House":"Проверьте даты с Pet House",
+  "Share your dates and we’ll confirm availability and the exact rate for your pet.":"Напишите даты — подтвердим наличие мест и назовём стоимость.",
+  "Book a stay":"Оставить заявку",
+  "BOOKING REQUEST":"ЗАЯВКА НА ПЕРЕДЕРЖКУ",
+  "Tell us about your pet":"Расскажите о питомце",
+  "Share the essentials below and we’ll reply with your exact quote.":"Заполните короткую форму — и мы ответим с точной стоимостью.",
+  "Your request is sent directly to Pet House. No email app will open.":"Заявка уйдёт напрямую в Pet House — почтовое приложение не откроется.",
+  "Boarding from":"Передержка от",
+  "Rates depend on the pet, length of stay and care required — contact us for a quote.":"Стоимость зависит от длительности передержки и особенностей ухода. Напишите нам — всё рассчитаем.",
+  "Get a quote":"Узнать стоимость"
+});
+const naturalRussianWalker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+const naturalRussianNodes=[];
+while(naturalRussianWalker.nextNode())naturalRussianNodes.push(naturalRussianWalker.currentNode);
+naturalRussianNodes.forEach(node=>{
+  const key=node.nodeValue.trim();
+  if(Object.prototype.hasOwnProperty.call(russianCopy,key))node.nodeValue=node.nodeValue.replace(key,russianCopy[key]);
+  else if(key.startsWith('“')&&key.endsWith('”')){
+    const inner=key.slice(1,-1);
+    if(Object.prototype.hasOwnProperty.call(russianCopy,inner))node.nodeValue=node.nodeValue.replace(key,'“'+russianCopy[inner]+'”');
+  }
+});
