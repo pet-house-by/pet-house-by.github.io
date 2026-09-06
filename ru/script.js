@@ -171,3 +171,16 @@ document.querySelectorAll('[placeholder],[aria-label],[title],[alt]').forEach(el
     if(el.hasAttribute(attr))el.setAttribute(attr,translateRussianText(el.getAttribute(attr)));
   });
 });
+
+
+/* Review quotations keep their punctuation while their text is translated. */
+const russianQuotedWalker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+const russianQuotedNodes=[];
+while(russianQuotedWalker.nextNode())russianQuotedNodes.push(russianQuotedWalker.currentNode);
+russianQuotedNodes.forEach(node=>{
+  const key=node.nodeValue.trim();
+  if(key.startsWith('“')&&key.endsWith('”')){
+    const inner=key.slice(1,-1);
+    if(Object.prototype.hasOwnProperty.call(russianCopy,inner))node.nodeValue=node.nodeValue.replace(key,'“'+russianCopy[inner]+'”');
+  }
+});
