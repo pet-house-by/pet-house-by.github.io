@@ -42,7 +42,7 @@ if(processSection){
 
 const contactOriginal=document.querySelector('#contact');
 if(contactOriginal){
-  const leftCopy=contactOriginal.querySelector(':scope > div:first-child > p:last-child');if(leftCopy) leftCopy.textContent='Send us your dates and we’ll confirm availability and your exact rate.';
+  const leftCopy=contactOriginal.querySelector(':scope > div:first-child > p:last-child');if(leftCopy) leftCopy.textContent='Send us your dates and we’ll confirm availability.';
   const cardCopy=contactOriginal.querySelector('.contact-card > p');if(cardCopy) cardCopy.textContent='Use the form above or choose the contact method that is easiest for you.';
 }
 
@@ -97,7 +97,7 @@ if(contactSection){
     contactCard.appendChild(bookingOptions);
   }
   const cta=document.createElement('section');cta.className='booking-banner';
-  cta.innerHTML='<div><p class="eyebrow">READY TO PLAN A STAY?</p><h2>Check your dates with Pet House</h2><p>Share your dates and we’ll confirm availability and the exact rate for your pet.</p></div><div class="booking-banner-actions"><a href="#booking-form" class="btn booking-main">Check availability</a><a href="#booking-form" class="btn booking-secondary">Book a stay</a></div>';
+  cta.innerHTML='<div><p class="eyebrow">READY TO PLAN A STAY?</p><h2>Check your dates with Pet House</h2><p>Share your dates and we’ll confirm availability.</p></div><div class="booking-banner-actions"><a href="#booking-form" class="btn booking-main">Check availability</a><a href="#booking-form" class="btn booking-secondary">Book a stay</a></div>';
   contactSection.insertAdjacentElement('beforebegin',cta);
 }
 
@@ -108,7 +108,7 @@ document.head.appendChild(bookingStyle);
 /* Real booking form submission — stays on the website */
 if(contactSection&&!document.querySelector('#booking-form')){
   const formSection=document.createElement('section');formSection.id='booking-form';formSection.className='section booking-form-section';
-  formSection.innerHTML='<div class="section-head"><p class="eyebrow">BOOKING REQUEST</p><h2>Tell us about your pet</h2><p>Share the essentials below and we’ll reply with your exact quote.</p></div><form class="pet-booking-form"><div class="form-grid"><label><span>Pet’s name *</span><input name="Pet name" type="text" placeholder="e.g. Luna" required></label><label><span>Pet type *</span><select name="Pet type" required><option value="">Choose</option><option>Dog</option><option>Cat</option></select></label><label><span>Age *</span><input name="Age" type="text" placeholder="e.g. 3 years" required></label><label><span>Breed / type</span><input name="Breed / type" type="text" placeholder="Optional"></label><label><span>Check-in *</span><input name="Check-in" type="date" required></label><label><span>Check-out *</span><input name="Check-out" type="date" required></label><label class="full"><span>Special care, medication or anything we should know</span><textarea name="Special care" rows="4" placeholder="Temperament, feeding routine, medication, anxiety, habits, etc."></textarea></label><label><span>Your name *</span><input name="Owner name" type="text" required></label><label><span>Best contact *</span><input name="Best contact" type="text" placeholder="Telegram, Instagram, email or phone" required></label></div><label class="form-consent"><input name="Vaccinations confirmed" type="checkbox" value="Yes"><span>My pet has up-to-date vaccinations and recent parasite/deworming treatment.</span></label><input type="text" name="_honey" class="form-honey" tabindex="-1" autocomplete="off"><input type="hidden" name="_subject" value="New Pet House booking request"><input type="hidden" name="_template" value="table"><div class="form-actions"><button class="btn primary form-submit" type="submit">Send booking request</button><button class="btn secondary copy-request" type="button">Copy request</button></div><p class="form-note">Your request is sent directly to Pet House. No email app will open.</p><div class="form-status" role="status" aria-live="polite"></div></form>';
+  formSection.innerHTML='<div class="section-head"><p class="eyebrow">BOOKING REQUEST</p><h2>Tell us about your pet</h2><p>Share the essentials below and we’ll get back to you.</p></div><form class="pet-booking-form"><div class="form-grid"><label><span>Pet’s name *</span><input name="Pet name" type="text" placeholder="e.g. Luna" required></label><label><span>Pet type *</span><select name="Pet type" required><option value="">Choose</option><option>Dog</option><option>Cat</option></select></label><label><span>Age *</span><input name="Age" type="text" placeholder="e.g. 3 years" required></label><label><span>Breed / type</span><input name="Breed / type" type="text" placeholder="Optional"></label><label><span>Check-in *</span><input name="Check-in" type="date" required></label><label><span>Check-out *</span><input name="Check-out" type="date" required></label><label class="full"><span>Special care, medication or anything we should know</span><textarea name="Special care" rows="4" placeholder="Temperament, feeding routine, medication, anxiety, habits, etc."></textarea></label><label><span>Your name *</span><input name="Owner name" type="text" required></label><label><span>Best contact *</span><input name="Best contact" type="text" placeholder="Telegram, Instagram, email or phone" required></label></div><label class="form-consent"><input name="Vaccinations confirmed" type="checkbox" value="Yes"><span>My pet has up-to-date vaccinations and recent parasite/deworming treatment.</span></label><input type="text" name="_honey" class="form-honey" tabindex="-1" autocomplete="off"><input type="hidden" name="_subject" value="New Pet House booking request"><input type="hidden" name="_template" value="table"><div class="form-actions"><button class="btn primary form-submit" type="submit">Send booking request</button><button class="btn secondary copy-request" type="button">Copy request</button></div><p class="form-note">Your request is sent directly to Pet House. No email app will open.</p><div class="form-status" role="status" aria-live="polite"></div></form>';
   const banner=document.querySelector('.booking-banner');if(banner)banner.insertAdjacentElement('beforebegin',formSection);else contactSection.insertAdjacentElement('beforebegin',formSection);
 
   const form=formSection.querySelector('.pet-booking-form');
@@ -144,14 +144,3 @@ if(contactSection&&!document.querySelector('#booking-form')){
   document.head.appendChild(formStyle);
 }
 
-/* Pricing */
-const servicesSection=document.querySelector('#services');
-if(servicesSection&&!document.querySelector('#pricing')){
-  const pricing=document.createElement('section');pricing.id='pricing';pricing.className='pricing-mini';
-  pricing.innerHTML='<div class="pricing-mini-inner"><div><p class="eyebrow">PRICING</p><h2>Boarding from <strong>$6.99/day</strong></h2><p>Rates depend on the pet, length of stay and care required — contact us for a quote.</p></div><a class="btn primary" href="#booking-form">Get a quote</a></div>';
-  servicesSection.insertAdjacentElement('afterend',pricing);
-  const priceLink=document.createElement('a');priceLink.href='#pricing';priceLink.textContent='Pricing';const reviewsNav=nav.querySelector('a[href="#reviews"]');if(reviewsNav)nav.insertBefore(priceLink,reviewsNav);else nav.appendChild(priceLink);
-  const priceStyle=document.createElement('style');
-  priceStyle.textContent='.pricing-mini{max-width:1120px;margin:0 auto 35px;padding:0 28px}.pricing-mini-inner{display:flex;align-items:center;justify-content:space-between;gap:35px;padding:30px 36px;border:1px solid #cfe5f0;border-radius:26px;background:linear-gradient(135deg,#eef9ff,#fff);box-shadow:0 12px 34px rgba(34,93,122,.07)}.pricing-mini .eyebrow{margin-bottom:5px}.pricing-mini h2{font-family:Georgia,serif;font-size:clamp(27px,3vw,38px);line-height:1.15;margin:0 0 7px}.pricing-mini h2 strong{color:var(--accent2);font-size:1.12em}.pricing-mini p:last-child{margin:0;color:var(--muted)}.pricing-mini .btn{flex-shrink:0}@media(max-width:650px){.pricing-mini{padding:0 18px}.pricing-mini-inner{padding:25px 22px;align-items:flex-start;flex-direction:column}.pricing-mini .btn{width:100%}}';
-  document.head.appendChild(priceStyle);
-}
